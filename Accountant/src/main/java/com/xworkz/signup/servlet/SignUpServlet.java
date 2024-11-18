@@ -1,7 +1,7 @@
 package com.xworkz.signup.servlet;
 import java.io.IOException;
 
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,18 +40,22 @@ public class SignUpServlet extends HttpServlet{
 				System.out.println("confirmPassword :" + confirmPassword);
 				
 				
-				SignUpService service=new SignUpServiceImpl();
-				
-				boolean valid=service.validateAndSave(new SignUpDTO(userId,username, Email, Password, confirmPassword));
-				if(valid)
 
+				SignUpDTO signUpDTO=new SignUpDTO(userId,username, Email, Password, confirmPassword);
+				SignUpService service=new SignUpServiceImpl();
+				boolean valid=service.validateAndSave(signUpDTO);
+				if(valid)
 				{
 					System.out.println("data valid");
+					req.setAttribute("username", signUpDTO);
+					req.setAttribute("msg", "msgSaved");
 				}else{
 					System.out.println("data invalid");
+					req.setAttribute("msgs", "msgNotSaved");
 				}						
-						
-
+				
+					RequestDispatcher dispatcher=req.getRequestDispatcher("/index.jsp");	
+                           dispatcher.forward(req, resp);
 			}
 				
 

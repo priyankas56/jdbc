@@ -18,12 +18,17 @@ public class SignUpRepositoryImpl implements SignUpRepository{
 			Connection connection=null;
 			PreparedStatement prst=null;
 			boolean ifsaved=false;
-			
-			
 			try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+                } catch(ClassNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+			try {
+			
 			connection=DriverManager.getConnection(ConnectionEnum.URL.getValue(),ConnectionEnum.USERNAME.getValue(),ConnectionEnum.PASSWORD.getValue());
 			prst=connection.prepareStatement("insert into person_table values(?,?,?,?,?)");
-		     prst.setString(1, signUpDTO.getUserId());
+	         prst.setString(1, signUpDTO.getUsername());
 		     prst.setString(2, signUpDTO.getUsername());
 		     prst.setString(3, signUpDTO.getEmail());
 		     prst.setString(4, signUpDTO.getPassword());
@@ -31,10 +36,10 @@ public class SignUpRepositoryImpl implements SignUpRepository{
 			int value=prst.executeUpdate();
 			if(value>0)
 			{
-				System.out.println("data saved");
+				System.out.println("data connected");
 				ifsaved=true;
 			}else {
-				System.out.println("data not saved");
+				System.out.println("data not connected");
 				ifsaved=false;
 			}
 			} catch (SQLException e) {

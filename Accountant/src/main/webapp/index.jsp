@@ -16,8 +16,15 @@ Email<input type="text" name="email"  value=${dto.email}>
 password<input type="password" name="password">
 confirmPassword<input type="password" name="confirmpassword">
 <input type="submit" value="Signup">
+
+<h3>
+<span style=color:green> ${msg}</span>
+<span style=color:red> ${msgs}</span>
+</h3>
 </pre>
+
+
 
 </form>
 </body>
-</html>>
+</html>
